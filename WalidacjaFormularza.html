@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularz z walidacją jQuery</title>
+    <!-- Dołączenie CDN jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Dołączenie wtyczki jQuery Validate -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
+    <style>
+		body {
+		background-color: #333333;
+		}
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			background-color: #ffffff;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form id="myForm">
+        <h2>Rejestracja</h2>
+        <label for="username">Nazwa użytkownika:</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="password">Hasło:</label>
+        <input type="password" id="password" name="password" required minlength="6">
+        
+        <label for="confirm_password">Potwierdź hasło:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+        
+        <button type="submit">Zarejestruj się</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            // Inicjalizacja walidacji
+            $("#myForm").validate({
+                rules: {
+                    username: {
+                        required: true,
+                        minlength: 3
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6
+                    },
+                    confirm_password: {
+                        required: true,
+                        equalTo: "#password"
+                    }
+                },
+                messages: {
+                    username: {
+                        required: "Podaj nazwę użytkownika.",
+                        minlength: "Nazwa użytkownika musi mieć co najmniej 3 znaki."
+                    },
+                    email: {
+                        required: "Podaj adres e-mail.",
+                        email: "Podaj poprawny adres e-mail."
+                    },
+                    password: {
+                        required: "Podaj hasło.",
+                        minlength: "Hasło musi mieć co najmniej 6 znaków."
+                    },
+                    confirm_password: {
+                        required: "Potwierdź hasło.",
+                        equalTo: "Hasła muszą być takie same."
+                    }
+                },
+                submitHandler: function (form) {
+                    alert("Formularz przesłany poprawnie!");
+                    form.submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
